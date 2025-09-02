@@ -1,0 +1,40 @@
+{
+  "name": "hong-kong-gallery",
+  "version": "1.0.0",
+  "description": "A premium digital gallery website featuring Hong Kong's cultural heritage with membership system and payment gateway",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "preview": "npx serve .",
+    "deploy": "gh-pages -d ."
+  },
+  "keywords": [
+    "hong-kong",
+    "gallery",
+    "cultural-heritage",
+    "membership",
+    "payment-gateway",
+    "immersive",
+    "3d-gallery",
+    "react",
+    "tailwind"
+  ],
+  "author": "Hong Kong Gallery Team",
+  "license": "MIT",
+  "homepage": "https://your-username.github.io/hong-kong-gallery",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/hong-kong-gallery.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/hong-kong-gallery/issues"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.0.0",
+    "serve": "^14.2.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+
