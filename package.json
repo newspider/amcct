@@ -1,5 +1,5 @@
 {
-  "name": "hong-kong-gallery",
+  "name": "AMCCT",
   "version": "1.0.0",
   "description": "A premium digital gallery website featuring Hong Kong's cultural heritage with membership system and payment gateway",
   "main": "index.html",
@@ -21,13 +21,13 @@
   ],
   "author": "Hong Kong Gallery Team",
   "license": "MIT",
-  "homepage": "https://your-username.github.io/hong-kong-gallery",
+  "homepage": "https://newspider.github.io/amcct",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/hong-kong-gallery.git"
+    "url": "https://github.com/newspider/hong-kong-gallery.git"
   },
   "bugs": {
-    "url": "https://github.com/your-username/hong-kong-gallery/issues"
+    "url": "https://github.com/newspider/hong-kong-gallery/issues"
   },
   "devDependencies": {
     "gh-pages": "^6.0.0",
