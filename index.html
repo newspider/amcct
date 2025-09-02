@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hong Kong Gallery - Immersive Cultural Experience</title>
+    <meta name="description" content="Experience Hong Kong's premier digital gallery with cutting-edge 3D tours and exclusive cultural content">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #ffffff;
+            background: #0a0a0a;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff4444;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff4444;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #ff4444;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #ff6666;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                        url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1920&h=1080&fit=crop') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff4444, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #ffffff;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Exhibitions */
+        .exhibitions {
+            background: #111111;
+        }
+
+        .exhibition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .exhibition-card {
+            background: #1a1a1a;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .exhibition-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .exhibition-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #333, #555);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #666;
+        }
+
+        .exhibition-content {
+            padding: 1.5rem;
+        }
+
+        .exhibition-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #ff4444;
+        }
+
+        .exhibition-artist {
+            color: #cccccc;
+            margin-bottom: 0.5rem;
+        }
+
+        .exhibition-date {
+            color: #888888;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .exhibition-description {
+            color: #aaaaaa;
+            margin-bottom: 1rem;
+        }
+
+        /* Virtual Tour */
+        .virtual-tour {
+            background: #0a0a0a;
+        }
+
+        .tour-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .tour-features {
+            list-style: none;
+        }
+
+        .tour-features li {
+            padding: 0.5rem 0;
+            color: #cccccc;
+        }
+
+        .tour-features li:before {
+            content: "🎨 ";
+            margin-right: 0.5rem;
+        }
+
+        .tour-preview {
+            background: #1a1a1a;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tour-preview-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Membership */
+        .membership {
+            background: #111111;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: #1a1a1a;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            transition: transform 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pricing-card.popular {
+            border-color: #ff4444;
+            transform: scale(1.05);
+        }
+
+        .pricing-card.selected {
+            border-color: #00ff00;
+            background: #1a2a1a;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff4444;
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff4444;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-period {
+            color: #888888;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features li {
+            padding: 0.5rem 0;
+            color: #cccccc;
+        }
+
+        .plan-features li:before {
+            content: "✓ ";
+            color: #ff4444;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #cccccc;
+            font-size: 0.9rem;
+        }
+
+        /* Cultural Heritage */
+        .heritage {
+            background: #0a0a0a;
+        }
+
+        .heritage-timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .heritage-period {
+            text-align: center;
+            padding: 2rem;
+            background: #1a1a1a;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .heritage-period:hover {
+            transform: translateY(-5px);
+        }
+
+        .heritage-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .heritage-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #ff4444;
+        }
+
+        .heritage-date {
+            color: #888888;
+            font-size: 0.9rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: #1a1a1a;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+        }
+
+        .close:hover {
+            color: #fff;
+        }
+
+        .modal h2 {
+            color: #ff4444;
+            margin-bottom: 1rem;
+        }
+
+        .modal p {
+            color: #cccccc;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #cccccc;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            background: #2a2a2a;
+            color: #ffffff;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff4444;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: #ff4444;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            z-index: 3000;
+            transform: translateX(400px);
+            transition: transform 0.3s;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: #00aa00;
+        }
+
+        .notification.error {
+            background: #aa0000;
+        }
+
+        /* Footer */
+        footer {
+            background: #111111;
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .tour-content {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.popular {
+                transform: none;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .modal-content {
+                margin: 10% auto;
+                width: 95%;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            border: 2px solid #333;
+            border-top: 2px solid #ff4444;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">🎨 HK Gallery</div>
+            <ul class="nav-links">
+                <li><a href="#exhibitions">Exhibitions</a></li>
+                <li><a href="#virtual-tour">Virtual Tour</a></li>
+                <li><a href="#membership">Membership</a></li>
+                <li><a href="#heritage">Heritage</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button class="btn btn-secondary" onclick="openLoginModal()">Login</button>
+                <a href="#membership" class="btn btn-primary">Join Now</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content fade-in">
+            <h1>Immersive Cultural Journey</h1>
+            <p>Experience Hong Kong's premier digital gallery with cutting-edge 3D tours and exclusive cultural content</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="startVirtualTour()">🎮 Start Virtual Tour</button>
+                <a href="#membership" class="btn btn-secondary">🎯 Explore Membership</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Exhibitions -->
+    <section id="exhibitions" class="exhibitions">
+        <div class="container">
+            <h2 class="section-title">Featured Exhibitions</h2>
+            <p class="section-subtitle">Discover our curated collection of contemporary and traditional artworks</p>
+            
+            <div class="exhibition-grid">
+                <div class="exhibition-card fade-in">
+                    <div class="exhibition-image">🏙️</div>
+                    <div class="exhibition-content">
+                        <h3 class="exhibition-title">Visions of Victoria Harbor</h3>
+                        <p class="exhibition-artist">Contemporary Hong Kong Artists</p>
+                        <p class="exhibition-date">📅 Dec 1, 2024 - Mar 15, 2025</p>
+                        <p class="exhibition-description">An immersive journey through Hong Kong's iconic harbor through the eyes of local artists.</p>
+                        <button class="btn btn-primary" onclick="viewExhibition('victoria-harbor')">👁️ View Exhibition</button>
+                    </div>
+                </div>
+
+                <div class="exhibition-card fade-in">
+                    <div class="exhibition-image">💻</div>
+                    <div class="exhibition-content">
+                        <h3 class="exhibition-title">Digital Dreams</h3>
+                        <p class="exhibition-artist">Interactive Media Collective</p>
+                        <p class="exhibition-date">📅 Nov 15, 2024 - Feb 28, 2025</p>
+                        <p class="exhibition-description">Exploring the intersection of technology and traditional Chinese art forms.</p>
+                        <button class="btn btn-primary" onclick="viewExhibition('digital-dreams')">👁️ View Exhibition</button>
+                    </div>
+                </div>
+
+                <div class="exhibition-card fade-in">
+                    <div class="exhibition-image">🏛️</div>
+                    <div class="exhibition-content">
+                        <h3 class="exhibition-title">Heritage Reimagined</h3>
+                        <p class="exhibition-artist">Chen Wei Ming & Associates</p>
+                        <p class="exhibition-date">📅 Jan 10, 2025 - Apr 30, 2025</p>
+                        <p class="exhibition-description">A modern interpretation of classical Chinese cultural elements.</p>
+                        <button class="btn btn-primary" onclick="viewExhibition('heritage-reimagined')">👁️ View Exhibition</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Virtual Tour -->
+    <section id="virtual-tour" class="virtual-tour">
+        <div class="container">
+            <h2 class="section-title">Experience Our Galleries in Immersive 3D</h2>
+            <div class="tour-content">
+                <div class="fade-in">
+                    <p style="font-size: 1.1rem; margin-bottom: 2rem; color: #cccccc;">
+                        Step into our virtual galleries and explore artworks from every angle. Our cutting-edge 3D technology brings you closer to art than ever before.
+                    </p>
+                    <ul class="tour-features">
+                        <li>360° artwork viewing</li>
+                        <li>Interactive gallery navigation</li>
+                        <li>Audio commentary by curators</li>
+                        <li>High-resolution artwork details</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="startVirtualTour()" style="margin-top: 2rem;">🎮 Start Virtual Tour</button>
+                </div>
+                <div class="tour-preview fade-in">
+                    <div class="tour-preview-icon">🖼️</div>
+                    <h3>3D Gallery Preview</h3>
+                    <p style="color: #888; margin-bottom: 1rem;">Experience immersive art viewing</p>
+                    <button class="btn btn-secondary" onclick="playPreview()">▶️ Play Preview</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership -->
+    <section id="membership" class="membership">
+        <div class="container">
+            <h2 class="section-title">Choose Your Membership</h2>
+            <p class="section-subtitle">Unlock exclusive access to Hong Kong's premier cultural experiences</p>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card fade-in" id="basic-plan">
+                    <h3 class="plan-name">Basic</h3>
+                    <div class="plan-price">HK$99</div>
+                    <div class="plan-period">/month</div>
+                    <ul class="plan-features">
+                        <li>Virtual Tours</li>
+                        <li>Monthly Newsletter</li>
+                        <li>Community Forum</li>
+                        <li>Basic Support</li>
+                    </ul>
+                    <button class="btn btn-secondary" onclick="selectPlan('basic', 99)">Choose Basic</button>
+                </div>
+
+                <div class="pricing-card popular fade-in" id="premium-plan">
+                    <div class="popular-badge">Most Popular</div>
+                    <h3 class="plan-name">Premium</h3>
+                    <div class="plan-price">HK$199</div>
+                    <div class="plan-period">/month</div>
+                    <ul class="plan-features">
+                        <li>All Basic Features</li>
+                        <li>Private Viewings</li>
+                        <li>Early Access</li>
+                        <li>Exclusive Content</li>
+                        <li>10% Discounts</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="selectPlan('premium', 199)">Choose Premium</button>
+                </div>
+
+                <div class="pricing-card fade-in" id="platinum-plan">
+                    <h3 class="plan-name">Platinum</h3>
+                    <div class="plan-price">HK$399</div>
+                    <div class="plan-period">/month</div>
+                    <ul class="plan-features">
+                        <li>All Premium Features</li>
+                        <li>Unlimited Access</li>
+                        <li>Personal Curator</li>
+                        <li>VIP Events</li>
+                        <li>20% Discounts</li>
+                    </ul>
+                    <button class="btn btn-secondary" onclick="selectPlan('platinum', 399)">Choose Platinum</button>
+                </div>
+            </div>
+
+            <p style="text-align: center; margin-top: 2rem; color: #888;">
+                All plans include 30-day money back guarantee
+            </p>
+
+            <div class="payment-methods">
+                <div class="payment-method">💳 Credit Cards</div>
+                <div class="payment-method">📱 Alipay</div>
+                <div class="payment-method">💰 WeChat Pay</div>
+                <div class="payment-method">🏦 PayPal</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cultural Heritage -->
+    <section id="heritage" class="heritage">
+        <div class="container">
+            <h2 class="section-title">Hong Kong Cultural Heritage</h2>
+            <p class="section-subtitle">Celebrating 5000 years of Chinese art and culture through modern digital experiences</p>
+            
+            <div class="heritage-timeline">
+                <div class="heritage-period fade-in" onclick="showHeritageInfo('ancient')">
+                    <div class="heritage-icon">🏺</div>
+                    <h3 class="heritage-title">Ancient</h3>
+                    <p class="heritage-date">3000 BCE - 220 CE</p>
+                </div>
+                <div class="heritage-period fade-in" onclick="showHeritageInfo('imperial')">
+                    <div class="heritage-icon">👑</div>
+                    <h3 class="heritage-title">Imperial</h3>
+                    <p class="heritage-date">220 - 1912 CE</p>
+                </div>
+                <div class="heritage-period fade-in" onclick="showHeritageInfo('colonial')">
+                    <div class="heritage-icon">🏛️</div>
+                    <h3 class="heritage-title">Colonial</h3>
+                    <p class="heritage-date">1842 - 1997</p>
+                </div>
+                <div class="heritage-period fade-in" onclick="showHeritageInfo('modern')">
+                    <div class="heritage-icon">🌆</div>
+                    <h3 class="heritage-title">Modern</h3>
+                    <p class="heritage-date">1997 - Present</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section id="about" style="background: #111111; text-align: center;">
+        <div class="container">
+            <h2 class="section-title">Ready to Begin Your Cultural Journey?</h2>
+            <p class="section-subtitle">Join thousands of art enthusiasts exploring Hong Kong's rich cultural heritage through our immersive digital platform.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="openContactModal()">🚀 Join Our Community</button>
+                <button class="btn btn-secondary" onclick="shareWebsite()">📤 Share with Friends</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>© 2024 Hong Kong Gallery. All rights reserved.</div>
+                <div>🎨 Made with ❤️ for Hong Kong's Cultural Heritage</div>
+            </div>
+            <p style="color: #666; font-size: 0.9rem;">
+                Experience the future of digital galleries with cutting-edge technology and immersive design.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Login to Your Account</h2>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+            </form>
+            <p style="margin-top: 1rem; text-align: center;">
+                Don't have an account? <a href="#" onclick="openSignupModal()" style="color: #ff4444;">Sign up here</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('signupModal')">&times;</span>
+            <h2>Create Your Account</h2>
+            <form onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email:</label>
+                    <input type="email" id="signupEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password:</label>
+                    <input type="password" id="signupPassword" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="membershipPlan">Membership Plan:</label>
+                    <select id="membershipPlan" name="membershipPlan">
+                        <option value="basic">Basic - HK$99/month</option>
+                        <option value="premium" selected>Premium - HK$199/month</option>
+                        <option value="platinum">Platinum - HK$399/month</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('contactModal')">&times;</span>
+            <h2>Contact Us</h2>
+            <form onsubmit="handleContact(event)">
+                <div class="form-group">
+                    <label for="contactName">Name:</label>
+                    <input type="text" id="contactName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">Email:</label>
+                    <input type="email" id="contactEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject:</label>
+                    <select id="subject" name="subject">
+                        <option value="membership">Membership Inquiry</option>
+                        <option value="exhibition">Exhibition Information</option>
+                        <option value="technical">Technical Support</option>
+                        <option value="general">General Question</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+
+    <script>
+        // Global variables
+        let selectedPlan = null;
+        let selectedPrice = 0;
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Modal functions
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        function openSignupModal() {
+            closeModal('loginModal');
+            document.getElementById('signupModal').style.display = 'block';
+        }
+
+        function openContactModal() {
+            document.getElementById('contactModal').style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        // Notification function
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Plan selection
+        function selectPlan(planName, price) {
+            // Remove previous selection
+            document.querySelectorAll('.pricing-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selection to current plan
+            document.getElementById(`${planName}-plan`).classList.add('selected');
+            
+            selectedPlan = planName;
+            selectedPrice = price;
+            
+            showNotification(`${planName.charAt(0).toUpperCase() + planName.slice(1)} plan selected! HK$${price}/month`);
+            
+            // Auto-open signup modal after 1 second
+            setTimeout(() => {
+                document.getElementById('membershipPlan').value = planName;
+                openSignupModal();
+            }, 1000);
+        }
+
+        // Virtual tour
+        function startVirtualTour() {
+            showNotification('Starting virtual tour...', 'success');
+            
+            // Simulate loading
+            setTimeout(() => {
+                showNotification('Virtual tour would open here in a real implementation!', 'success');
+            }, 1500);
+        }
+
+        function playPreview() {
+            showNotification('Playing 3D gallery preview...', 'success');
+        }
+
+        // Exhibition viewing
+        function viewExhibition(exhibitionId) {
+            const exhibitions = {
+                'victoria-harbor': 'Visions of Victoria Harbor',
+                'digital-dreams': 'Digital Dreams',
+                'heritage-reimagined': 'Heritage Reimagined'
+            };
+            
+            const exhibitionName = exhibitions[exhibitionId];
+            showNotification(`Opening ${exhibitionName} exhibition...`, 'success');
+            
+            // Simulate exhibition loading
+            setTimeout(() => {
+                showNotification(`${exhibitionName} exhibition would open here!`, 'success');
+            }, 1000);
+        }
+
+        // Heritage information
+        function showHeritageInfo(period) {
+            const heritageInfo = {
+                'ancient': 'Ancient Chinese civilization (3000 BCE - 220 CE): The foundation of Chinese culture, featuring early pottery, bronze work, and philosophical traditions.',
+                'imperial': 'Imperial China (220 - 1912 CE): Dynasties that shaped Chinese art, including Tang poetry, Song paintings, and Ming porcelain.',
+                'colonial': 'Colonial Hong Kong (1842 - 1997): The fusion of Eastern and Western cultures, creating unique architectural and artistic styles.',
+                'modern': 'Modern Hong Kong (1997 - Present): Contemporary art scene blending traditional Chinese culture with international influences.'
+            };
+            
+            showNotification(heritageInfo[period], 'success');
+        }
+
+        // Share website
+        function shareWebsite() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Hong Kong Gallery - Immersive Cultural Experience',
+                    text: 'Experience Hong Kong\'s premier digital gallery with cutting-edge 3D tours!',
+                    url: window.location.href
+                });
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    showNotification('Website URL copied to clipboard!', 'success');
+                }).catch(() => {
+                    showNotification('Unable to copy URL. Please copy manually: ' + window.location.href, 'error');
+                });
+            }
+        }
+
+        // Form handlers
+        function handleLogin(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const email = formData.get('email');
+            
+            showNotification('Logging in...', 'success');
+            
+            // Simulate login process
+            setTimeout(() => {
+                showNotification(`Welcome back! Logged in as ${email}`, 'success');
+                closeModal('loginModal');
+                
+                // Update UI for logged in state
+                document.querySelector('.auth-buttons').innerHTML = `
+                    <span style="color: #cccccc;">Welcome, ${email.split('@')[0]}!</span>
+                    <button class="btn btn-secondary" onclick="logout()">Logout</button>
+                `;
+            }, 1500);
+        }
+
+        function handleSignup(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const name = formData.get('fullName');
+            const email = formData.get('email');
+            const plan = formData.get('membershipPlan');
+            
+            showNotification('Creating account...', 'success');
+            
+            // Simulate signup process
+            setTimeout(() => {
+                showNotification(`Account created successfully! Welcome ${name}!`, 'success');
+                closeModal('signupModal');
+                
+                // Show payment simulation
+                setTimeout(() => {
+                    const planPrices = { basic: 99, premium: 199, platinum: 399 };
+                    showNotification(`Redirecting to payment for ${plan} plan (HK$${planPrices[plan]}/month)...`, 'success');
+                }, 1000);
+            }, 1500);
+        }
+
+        function handleContact(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const name = formData.get('name');
+            const subject = formData.get('subject');
+            
+            showNotification('Sending message...', 'success');
+            
+            // Simulate message sending
+            setTimeout(() => {
+                showNotification(`Thank you ${name}! Your ${subject} inquiry has been sent.`, 'success');
+                closeModal('contactModal');
+                event.target.reset();
+            }, 1500);
+        }
+
+        function logout() {
+            showNotification('Logged out successfully!', 'success');
+            
+            // Reset auth buttons
+            document.querySelector('.auth-buttons').innerHTML = `
+                <button class="btn btn-secondary" onclick="openLoginModal()">Login</button>
+                <a href="#membership" class="btn btn-primary">Join Now</a>
+            `;
+        }
+
+        // Add fade-in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Mobile menu toggle
+        function checkMobile() {
+            const navLinks = document.querySelector('.nav-links');
+            if (window.innerWidth <= 768) {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+            }
+        }
+
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+
+        // Button click effects
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Create ripple effect
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.3)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.pointerEvents = 'none';
+                
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Console welcome message
+        console.log('🎨 Welcome to Hong Kong Gallery!');
+        console.log('🚀 All buttons are now functional!');
+        console.log('✨ Try clicking on membership plans, exhibitions, and other interactive elements.');
+    </script>
+</body>
+</html>
+
